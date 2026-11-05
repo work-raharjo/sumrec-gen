@@ -1,0 +1,1850 @@
+{
+ "NUSANTARA-BR1-E": {
+  "found": true,
+  "long_nom": 150.5,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "07.01.2020",
+    "plan": false,
+    "tx": [
+     [
+      3400,
+      4200
+     ],
+     [
+      7250,
+      7750
+     ],
+     [
+      10950,
+      11200
+     ],
+     [
+      11450,
+      12750
+     ]
+    ],
+    "rx": [
+     [
+      5725,
+      6725
+     ],
+     [
+      7025,
+      7075
+     ],
+     [
+      7900,
+      8400
+     ],
+     [
+      13750,
+      14800
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 5250,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "07.01.2020",
+    "wic_no": 2924,
+    "d_wic": "07.07.2020"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 5250,
+    "ssn_rev": "M",
+    "ssn_rev_no": 1,
+    "d_rcv": "07.01.2020",
+    "wic_no": 2928,
+    "d_wic": "01.09.2020"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 5250,
+    "ssn_rev": "M",
+    "ssn_rev_no": 2,
+    "d_rcv": "07.01.2020",
+    "wic_no": 2932,
+    "d_wic": "27.10.2020"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 5250,
+    "ssn_rev": "M",
+    "ssn_rev_no": 3,
+    "d_rcv": "07.01.2020",
+    "wic_no": 2935,
+    "d_wic": "08.12.2020"
+   },
+   {
+    "ssn_ref": "CR/D",
+    "ssn_no": 4390,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "07.01.2020",
+    "wic_no": 2948,
+    "d_wic": "15.06.2021"
+   }
+  ]
+ },
+ "JMCS-1": {
+  "found": true,
+  "long_nom": 144,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "N",
+    "prov": "",
+    "d_rcv": "09.04.2004",
+    "plan": false,
+    "tx": [
+     [
+      7250.002,
+      7250.402
+     ],
+     [
+      7255,
+      7375
+     ]
+    ],
+    "rx": [
+     [
+      7905,
+      8025
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 2998,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "03.09.1996",
+    "wic_no": 2322,
+    "d_wic": "07.04.1998"
+   }
+  ]
+ },
+ "JMCS-1R": {
+  "found": true,
+  "long_nom": 144,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "N",
+    "prov": "",
+    "d_rcv": "20.08.2008",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7250.4
+     ],
+     [
+      7255,
+      7375
+     ]
+    ],
+    "rx": [
+     [
+      7905,
+      8025
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 1284,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "05.09.2003",
+    "wic_no": 2526,
+    "d_wic": "24.08.2004"
+   }
+  ]
+ },
+ "JMCS-2": {
+  "found": true,
+  "long_nom": 110,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "N",
+    "prov": "",
+    "d_rcv": "28.06.2010",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7495
+     ],
+     [
+      7502.5,
+      7745
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8145
+     ],
+     [
+      8152.5,
+      8395
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 2999,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "03.09.1996",
+    "wic_no": 2322,
+    "d_wic": "07.04.1998"
+   },
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 2999,
+    "ssn_rev": "M",
+    "ssn_rev_no": 1,
+    "d_rcv": "06.04.1998",
+    "wic_no": 2414,
+    "d_wic": "07.03.2000"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 426,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "06.04.1998",
+    "wic_no": 2480,
+    "d_wic": "15.10.2002"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 426,
+    "ssn_rev": "M",
+    "ssn_rev_no": 1,
+    "d_rcv": "29.06.1999",
+    "wic_no": 2482,
+    "d_wic": "12.11.2002"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 426,
+    "ssn_rev": "M",
+    "ssn_rev_no": 2,
+    "d_rcv": "15.11.2000",
+    "wic_no": 2490,
+    "d_wic": "25.03.2003"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 426,
+    "ssn_rev": "M",
+    "ssn_rev_no": 3,
+    "d_rcv": "02.11.2005",
+    "wic_no": 2568,
+    "d_wic": "02.05.2006"
+   }
+  ]
+ },
+ "JMCS-3A": {
+  "found": true,
+  "long_nom": 158,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "N",
+    "prov": "",
+    "d_rcv": "23.07.2010",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7495
+     ],
+     [
+      7502.5,
+      7745
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8145
+     ],
+     [
+      8152.5,
+      8395
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 3226,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "21.10.1997",
+    "wic_no": 2384,
+    "d_wic": "29.06.1999"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 427,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "21.10.1997",
+    "wic_no": 2480,
+    "d_wic": "15.10.2002"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 427,
+    "ssn_rev": "M",
+    "ssn_rev_no": 1,
+    "d_rcv": "29.06.1999",
+    "wic_no": 2482,
+    "d_wic": "12.11.2002"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 427,
+    "ssn_rev": "M",
+    "ssn_rev_no": 2,
+    "d_rcv": "02.11.2005",
+    "wic_no": 2567,
+    "d_wic": "18.04.2006"
+   }
+  ]
+ },
+ "JMCS-3B": {
+  "found": true,
+  "long_nom": 162,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "N",
+    "prov": "",
+    "d_rcv": "25.04.2013",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7495
+     ],
+     [
+      7502.5,
+      7745
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8145
+     ],
+     [
+      8152.5,
+      8395
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 3227,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "21.10.1997",
+    "wic_no": 2384,
+    "d_wic": "29.06.1999"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 428,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "21.10.1997",
+    "wic_no": 2480,
+    "d_wic": "15.10.2002"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 428,
+    "ssn_rev": "M",
+    "ssn_rev_no": 1,
+    "d_rcv": "29.06.1999",
+    "wic_no": 2482,
+    "d_wic": "12.11.2002"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 428,
+    "ssn_rev": "M",
+    "ssn_rev_no": 2,
+    "d_rcv": "02.11.2005",
+    "wic_no": 2567,
+    "d_wic": "18.04.2006"
+   }
+  ]
+ },
+ "SUPERBIRD-A": {
+  "found": true,
+  "long_nom": 158,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "N",
+    "prov": "",
+    "d_rcv": "07.03.2025",
+    "plan": false,
+    "tx": [
+     [
+      7250.002,
+      7250.402
+     ],
+     [
+      7275,
+      7315
+     ],
+     [
+      7335,
+      7375
+     ]
+    ],
+    "rx": [
+     [
+      7925,
+      7965
+     ],
+     [
+      7985,
+      8025
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 1303,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "18.03.1988",
+    "wic_no": 1836,
+    "d_wic": "02.08.1988"
+   },
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 1303,
+    "ssn_rev": "C",
+    "ssn_rev_no": 1,
+    "d_rcv": "23.08.1988",
+    "wic_no": 1865,
+    "d_wic": "28.02.1989"
+   },
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 1303,
+    "ssn_rev": "A",
+    "ssn_rev_no": 1,
+    "d_rcv": "27.08.1990",
+    "wic_no": 1970,
+    "d_wic": "02.04.1991"
+   },
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 1303,
+    "ssn_rev": "M",
+    "ssn_rev_no": 1,
+    "d_rcv": "21.06.1991",
+    "wic_no": 1994,
+    "d_wic": "17.09.1991"
+   },
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 1303,
+    "ssn_rev": "A",
+    "ssn_rev_no": 2,
+    "d_rcv": "03.07.1992",
+    "wic_no": 2062,
+    "d_wic": "02.02.1993"
+   },
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 1303,
+    "ssn_rev": "M",
+    "ssn_rev_no": 2,
+    "d_rcv": "15.03.1993",
+    "wic_no": 2099,
+    "d_wic": "19.10.1993"
+   },
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 1303,
+    "ssn_rev": "A",
+    "ssn_rev_no": 3,
+    "d_rcv": "03.01.1994",
+    "wic_no": 2150,
+    "d_wic": "25.10.1994"
+   },
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 1303,
+    "ssn_rev": "M",
+    "ssn_rev_no": 3,
+    "d_rcv": "06.02.1995",
+    "wic_no": 2171,
+    "d_wic": "04.04.1995"
+   },
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 1303,
+    "ssn_rev": "M",
+    "ssn_rev_no": 4,
+    "d_rcv": "24.05.1994",
+    "wic_no": 2223,
+    "d_wic": "16.04.1996"
+   },
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 1303,
+    "ssn_rev": "M",
+    "ssn_rev_no": 5,
+    "d_rcv": "10.11.1995",
+    "wic_no": 2277,
+    "d_wic": "13.05.1997"
+   },
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 1303,
+    "ssn_rev": "M",
+    "ssn_rev_no": 6,
+    "d_rcv": "10.11.1995",
+    "wic_no": 2458,
+    "d_wic": "27.11.2001"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 782,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "08.12.2000",
+    "wic_no": 2488,
+    "d_wic": "25.02.2003"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 782,
+    "ssn_rev": "M",
+    "ssn_rev_no": 1,
+    "d_rcv": "04.06.2002",
+    "wic_no": 2500,
+    "d_wic": "12.08.2003"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 782,
+    "ssn_rev": "M",
+    "ssn_rev_no": 2,
+    "d_rcv": "18.02.2013",
+    "wic_no": 2746,
+    "d_wic": "11.06.2013"
+   }
+  ]
+ },
+ "SUPERBIRD-B": {
+  "found": true,
+  "long_nom": 162,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "N",
+    "prov": "",
+    "d_rcv": "13.08.2025",
+    "plan": false,
+    "tx": [
+     [
+      7250.002,
+      7250.402
+     ],
+     [
+      7275,
+      7315
+     ],
+     [
+      7335,
+      7375
+     ],
+     [
+      12270,
+      12750
+     ]
+    ],
+    "rx": [
+     [
+      7925,
+      7965
+     ],
+     [
+      7985,
+      8025
+     ],
+     [
+      14000,
+      14480
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 1307,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "18.03.1988",
+    "wic_no": 1836,
+    "d_wic": "02.08.1988"
+   },
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 1307,
+    "ssn_rev": "C",
+    "ssn_rev_no": 1,
+    "d_rcv": "23.08.1988",
+    "wic_no": 1865,
+    "d_wic": "28.02.1989"
+   },
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 1307,
+    "ssn_rev": "A",
+    "ssn_rev_no": 1,
+    "d_rcv": "21.03.1991",
+    "wic_no": 2002,
+    "d_wic": "12.11.1991"
+   },
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 1307,
+    "ssn_rev": "A",
+    "ssn_rev_no": 2,
+    "d_rcv": "03.01.1994",
+    "wic_no": 2150,
+    "d_wic": "25.10.1994"
+   },
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 1307,
+    "ssn_rev": "M",
+    "ssn_rev_no": 1,
+    "d_rcv": "06.02.1995",
+    "wic_no": 2171,
+    "d_wic": "04.04.1995"
+   },
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 1307,
+    "ssn_rev": "M",
+    "ssn_rev_no": 2,
+    "d_rcv": "24.05.1994",
+    "wic_no": 2223,
+    "d_wic": "16.04.1996"
+   },
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 1307,
+    "ssn_rev": "M",
+    "ssn_rev_no": 3,
+    "d_rcv": "10.11.1995",
+    "wic_no": 2277,
+    "d_wic": "13.05.1997"
+   },
+   {
+    "ssn_ref": "AR11/C",
+    "ssn_no": 1307,
+    "ssn_rev": "M",
+    "ssn_rev_no": 4,
+    "d_rcv": "10.11.1995",
+    "wic_no": 2458,
+    "d_wic": "27.11.2001"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 783,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "08.12.2000",
+    "wic_no": 2488,
+    "d_wic": "25.02.2003"
+   }
+  ]
+ },
+ "N-SAT-Y15-162E": {
+  "found": true,
+  "long_nom": 162,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "26.05.2022",
+    "plan": false,
+    "tx": [
+     [
+      7375,
+      7750
+     ],
+     [
+      12200,
+      12750
+     ]
+    ],
+    "rx": [
+     [
+      13750,
+      14500
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 3941,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "28.11.2015",
+    "wic_no": 2821,
+    "d_wic": "07.06.2016"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 3941,
+    "ssn_rev": "M",
+    "ssn_rev_no": 1,
+    "d_rcv": "26.05.2022",
+    "wic_no": 2989,
+    "d_wic": "07.02.2023"
+   }
+  ]
+ },
+ "N-SAT-Y15-93E": {
+  "found": true,
+  "long_nom": 93,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "12.05.2026",
+    "plan": false,
+    "tx": [
+     [
+      7375,
+      7750
+     ],
+     [
+      12200,
+      12750
+     ]
+    ],
+    "rx": [
+     [
+      13750,
+      14500
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 3939,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "28.11.2015",
+    "wic_no": 2821,
+    "d_wic": "07.06.2016"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 3939,
+    "ssn_rev": "M",
+    "ssn_rev_no": 1,
+    "d_rcv": "26.05.2022",
+    "wic_no": 2989,
+    "d_wic": "07.02.2023"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 3939,
+    "ssn_rev": "M",
+    "ssn_rev_no": 2,
+    "d_rcv": "26.05.2022",
+    "wic_no": 3022,
+    "d_wic": "28.05.2024"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 3939,
+    "ssn_rev": "M",
+    "ssn_rev_no": 3,
+    "d_rcv": "12.05.2026",
+    "wic_no": 3080,
+    "d_wic": "15.09.2026"
+   }
+  ]
+ },
+ "JMCS-5A": {
+  "found": true,
+  "long_nom": 158,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "13.11.2018",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 4881,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "13.11.2018",
+    "wic_no": 2892,
+    "d_wic": "02.04.2019"
+   }
+  ]
+ },
+ "JMCS-5D": {
+  "found": true,
+  "long_nom": 110,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "13.11.2018",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 4882,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "13.11.2018",
+    "wic_no": 2892,
+    "d_wic": "02.04.2019"
+   }
+  ]
+ },
+ "JMCS-162E": {
+  "found": true,
+  "long_nom": 162,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 3330,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "11.01.2013",
+    "wic_no": 2744,
+    "d_wic": "14.05.2013"
+   }
+  ]
+ },
+ "JMCS-B4-X": {
+  "found": true,
+  "long_nom": 162,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 2153,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "26.01.2008",
+    "wic_no": 2620,
+    "d_wic": "27.05.2008"
+   }
+  ]
+ },
+ "JMCS-C2-X": {
+  "found": true,
+  "long_nom": 144,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 1515,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "24.12.2004",
+    "wic_no": 2551,
+    "d_wic": "23.08.2005"
+   }
+  ]
+ },
+ "JMCS-D2-X": {
+  "found": true,
+  "long_nom": 110,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 2154,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "26.01.2008",
+    "wic_no": 2620,
+    "d_wic": "27.05.2008"
+   }
+  ]
+ },
+ "JMCS-144X": {
+  "found": true,
+  "long_nom": 144,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 4665,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "12.01.2018",
+    "wic_no": 2874,
+    "d_wic": "10.07.2018"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 4665,
+    "ssn_rev": "M",
+    "ssn_rev_no": 1,
+    "d_rcv": "12.01.2018",
+    "wic_no": 2892,
+    "d_wic": "02.04.2019"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 4665,
+    "ssn_rev": "M",
+    "ssn_rev_no": 2,
+    "d_rcv": "12.01.2025",
+    "wic_no": 3069,
+    "d_wic": "14.04.2026"
+   }
+  ]
+ },
+ "JMCS-93E": {
+  "found": true,
+  "long_nom": 93,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 1916,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "01.12.2006",
+    "wic_no": 2591,
+    "d_wic": "03.04.2007"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 1922,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "06.12.2006",
+    "wic_no": 2591,
+    "d_wic": "03.04.2007"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 1922,
+    "ssn_rev": "M",
+    "ssn_rev_no": 1,
+    "d_rcv": "24.04.2013",
+    "wic_no": 2749,
+    "d_wic": "23.07.2013"
+   }
+  ]
+ },
+ "JMCS-93E-R": {
+  "found": true,
+  "long_nom": 93,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 3006,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "07.10.2011",
+    "wic_no": 2711,
+    "d_wic": "24.01.2012"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 3006,
+    "ssn_rev": "M",
+    "ssn_rev_no": 1,
+    "d_rcv": "30.05.2013",
+    "wic_no": 2754,
+    "d_wic": "01.10.2013"
+   }
+  ]
+ },
+ "JMCS-6-93E": {
+  "found": true,
+  "long_nom": 93,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 5483,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "22.01.2021",
+    "wic_no": 2950,
+    "d_wic": "13.07.2021"
+   }
+  ]
+ },
+ "JMCS-6U-110E": {
+  "found": true,
+  "long_nom": 110,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 6093,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "09.11.2023",
+    "wic_no": 3018,
+    "d_wic": "02.04.2024"
+   }
+  ]
+ },
+ "JMCS-6-124E": {
+  "found": true,
+  "long_nom": 124,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 5251,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "10.01.2020",
+    "wic_no": 2924,
+    "d_wic": "07.07.2020"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 5251,
+    "ssn_rev": "M",
+    "ssn_rev_no": 1,
+    "d_rcv": "10.01.2020",
+    "wic_no": 2935,
+    "d_wic": "08.12.2020"
+   }
+  ]
+ },
+ "JMCS-6-132E": {
+  "found": true,
+  "long_nom": 132,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 5252,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "10.01.2020",
+    "wic_no": 2924,
+    "d_wic": "07.07.2020"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 5252,
+    "ssn_rev": "M",
+    "ssn_rev_no": 1,
+    "d_rcv": "10.01.2020",
+    "wic_no": 2935,
+    "d_wic": "08.12.2020"
+   }
+  ]
+ },
+ "JMCS-6-136E": {
+  "found": true,
+  "long_nom": 136,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 5480,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "22.01.2021",
+    "wic_no": 2950,
+    "d_wic": "13.07.2021"
+   }
+  ]
+ },
+ "JMCS-6-141E": {
+  "found": true,
+  "long_nom": 141,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 5253,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "10.01.2020",
+    "wic_no": 2924,
+    "d_wic": "07.07.2020"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 5253,
+    "ssn_rev": "M",
+    "ssn_rev_no": 1,
+    "d_rcv": "10.01.2020",
+    "wic_no": 2935,
+    "d_wic": "08.12.2020"
+   }
+  ]
+ },
+ "JMCS-6-144E": {
+  "found": true,
+  "long_nom": 144,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 5254,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "10.01.2020",
+    "wic_no": 2924,
+    "d_wic": "07.07.2020"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 5254,
+    "ssn_rev": "M",
+    "ssn_rev_no": 1,
+    "d_rcv": "10.01.2020",
+    "wic_no": 2935,
+    "d_wic": "08.12.2020"
+   }
+  ]
+ },
+ "JMCS-6-154E": {
+  "found": true,
+  "long_nom": 154,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 5255,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "10.01.2020",
+    "wic_no": 2924,
+    "d_wic": "07.07.2020"
+   },
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 5255,
+    "ssn_rev": "M",
+    "ssn_rev_no": 1,
+    "d_rcv": "10.01.2020",
+    "wic_no": 2935,
+    "d_wic": "08.12.2020"
+   }
+  ]
+ },
+ "JMCS-6-158E": {
+  "found": true,
+  "long_nom": 158,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 5481,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "22.01.2021",
+    "wic_no": 2950,
+    "d_wic": "13.07.2021"
+   }
+  ]
+ },
+ "JMCS-6-162E": {
+  "found": true,
+  "long_nom": 162,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 5482,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "22.01.2021",
+    "wic_no": 2950,
+    "d_wic": "13.07.2021"
+   }
+  ]
+ },
+ "JMCS-6-168E5": {
+  "found": true,
+  "long_nom": 168.5,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 5484,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "22.01.2021",
+    "wic_no": 2950,
+    "d_wic": "13.07.2021"
+   }
+  ]
+ },
+ "JMCS-7-124E": {
+  "found": true,
+  "long_nom": 124,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 6563,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "24.12.2025",
+    "wic_no": 3078,
+    "d_wic": "18.08.2026"
+   }
+  ]
+ },
+ "JMCS-7-132E": {
+  "found": true,
+  "long_nom": 132,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 6564,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "24.12.2025",
+    "wic_no": 3078,
+    "d_wic": "18.08.2026"
+   }
+  ]
+ },
+ "JMCS-7-141E": {
+  "found": true,
+  "long_nom": 141,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 6566,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "24.12.2025",
+    "wic_no": 3078,
+    "d_wic": "18.08.2026"
+   }
+  ]
+ },
+ "JMCS-7-144E": {
+  "found": true,
+  "long_nom": 144,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 6565,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "24.12.2025",
+    "wic_no": 3078,
+    "d_wic": "18.08.2026"
+   }
+  ]
+ },
+ "JMCS-7-154E": {
+  "found": true,
+  "long_nom": 154,
+  "ntc_type": "G",
+  "notices": [
+   {
+    "ntc_id": 0,
+    "ntf_rsn": "C",
+    "prov": "",
+    "d_rcv": "-",
+    "plan": false,
+    "tx": [
+     [
+      7250,
+      7750
+     ]
+    ],
+    "rx": [
+     [
+      7900,
+      8400
+     ]
+    ]
+   }
+  ],
+  "pubs": [
+   {
+    "ssn_ref": "CR/C",
+    "ssn_no": 6574,
+    "ssn_rev": null,
+    "ssn_rev_no": null,
+    "d_rcv": "24.12.2025",
+    "wic_no": 3080,
+    "d_wic": "15.09.2026"
+   }
+  ]
+ },
+ "JMCS-7-93E": {
+  "found": false,
+  "long_nom": null,
+  "ntc_type": null,
+  "notices": [],
+  "pubs": []
+ }
+}
