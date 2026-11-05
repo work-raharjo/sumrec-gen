@@ -94,11 +94,20 @@ def date_key(s):
         return datetime.max
 
 
-def pub_rows(name, pos_label, d, ss_types, missing_label="Not yet received by the BR"):
+def ific_txt(p):
+    return f"IFIC{p['wic_no']}\n{p['d_wic']}"
+
+
+def pub_rows(name, pos_label, d, ss_types, missing_label="Not yet received by the BR", list_mods=False):
+    """One row per network with its base coordination special section (earliest date of receipt);
+    with list_mods=True every special section of the selected types (incl. modifications) is listed."""
     rows = []
-    for p in d["pubs"] if d else []:
-        if (p["ssn_ref"] or "").strip() in ss_types:
-            rows.append((name, pos_label, ss_label(p), p["d_rcv"] or "-", f"IFIC {p['wic_no']}, {p['d_wic']}"))
+    cand = [p for p in (d["pubs"] if d else []) if (p["ssn_ref"] or "").strip() in ss_types]
+    if not list_mods and cand:
+        base = [p for p in cand if not (p.get("ssn_rev") or "").strip()] or cand
+        cand = [min(base, key=lambda p: (date_key(p["d_rcv"]), p["wic_no"] or 0))]
+    for p in cand:
+        rows.append((name, pos_label, ss_label(p), p["d_rcv"] or "-", ific_txt(p)))
     if not rows:
         rows.append((name, pos_label, missing_label if not (d and d["found"]) else "No matching special section", "-", "-"))
     return rows
@@ -169,37 +178,31 @@ def build_content(inp: dict, data: dict) -> dict:
 
     t1 = []
     for n, p in ins:
-        t1 += pub_rows(n, fmt_pos(lon(n, p)), data.get(n), ss_types)
+        t1 += pub_rows(n, fmt_pos(lon(n, p)), data.get(n), ss_types, list_mods=inp.get("list_mods", False))
     t2 = []
     for n, p in js:
-        t2 += pub_rows(n, fmt_pos(lon(n, p)), data.get(n), ss_types)
+        t2 += pub_rows(n, fmt_pos(lon(n, p)), data.get(n), ss_types, list_mods=inp.get("list_mods", False))
 
     t3 = []
     for n_i, p_i in ins:
         li = lon(n_i, p_i)
-        groups = {}
         for n, p in js:
-            groups.setdefault(lon(n, p), []).append(n)
-        for lj, names in sorted(groups.items(), key=lambda kv: (separation(li, kv[0]) is None, separation(li, kv[0]) or 0)):
-            sep = separation(li, lj)
-            t3.append((f"{n_i} ({fmt_pos(li)})", "\n".join(f"{x} ({fmt_pos(lj)})" for x in names),
-                       "-" if sep is None else f"{sep:.1f}"))
+            sep = separation(li, lon(n, p))
+            t3.append((n_i, n, "-" if sep is None else f"{sep:g}"))
 
     a = analyse(inp, data)
     u = a["union"]
-    overlap_lines = []
     lab = inp.get("band_label", "")
-    for rs, direction in ((u["se"], "space-to-Earth"), (u["es"], "Earth-to-space"), (u["opp"], "opposite direction")):
-        if rs:
-            overlap_lines.append(f"{lab + ' band: ' if lab else ''}{join_and([fmt_range(r) for r in rs])} MHz ({direction})")
-    ins_band_txt = join_and([x for x in (ranges_txt(a["ins_tx"]) + " (space-to-Earth)" if a["ins_tx"] else "",
-                                         ranges_txt(a["ins_rx"]) + " (Earth-to-space)" if a["ins_rx"] else "") if x])
+    freq_rows = []
+    for rs, direction in ((u["se"], "space-to-Earth"), (u["es"], "Earth-to-space"), (u["opp"], "opposite")):
+        for r in rs:
+            freq_rows.append(f"{fmt_range(r)} MHz in the {direction} direction, as appropriate;")
+    j_list = ", ".join(f"{n} ({fmt_pos(lon(n, p))})" for n, p in js)
     return {
         "section_no": inp["section_no"], "section_title": inp["section_title"],
         "item_no": inp["item_no"], "item_title": inp["item_title"],
-        "t1": t1, "t2": t2, "t3": t3, "overlap_lines": overlap_lines,
+        "t1": t1, "t2": t2, "t3": t3, "freq_rows": freq_rows, "j_list": j_list,
         "ins_label": ", ".join(f"{n} ({fmt_pos(lon(n, p))})" for n, p in ins),
-        "ins_band_txt": ins_band_txt,
         "band_label": lab,
         "source_note": f"Source: ITU Space Explorer (SNS){', up to ' + inp['ific_label'] if inp.get('ific_label') else ''}.",
         "ss_types": ss_types,
@@ -208,12 +211,22 @@ def build_content(inp: dict, data: dict) -> dict:
     }
 
 
-def _group_title(g, inp):
-    names = [n for n, _ in g["nets"]]
-    if len(names) <= 4:
-        return f"Coordination with {join_and(names)}"
+def net_list(nets, data):
+    """'A (144E), B (158E), C (162E)' as in the INS-J summary records."""
+    return ", ".join(f"{n} ({fmt_pos(net_lon(n, p, data))})" for n, p in nets)
+
+
+def sn(nets):
+    return "satellite networks" if len(nets) > 1 else "satellite network"
+
+
+def _group_title(g, inp, data):
+    ins = net_list(inp["ins_nets"], data)
+    if len(g["nets"]) <= 6:
+        return f"Coordination between the {ins} satellite network and the {net_list(g['nets'], data)} {sn(g['nets'])}"
     parts = [ranges_txt(g["se"]), ranges_txt(g["es"])]
-    return f"Coordination in the bands {join_and([x for x in parts if x])}"
+    return (f"Coordination between the {ins} satellite network and the satellite networks overlapping in "
+            f"{join_and([x for x in parts if x])}")
 
 
 def draft_discussion(inp: dict, data: dict, comments=None) -> str:
@@ -222,7 +235,8 @@ def draft_discussion(inp: dict, data: dict, comments=None) -> str:
     ex = set(inp.get("exclude", []))
     a = analyse(inp, data)
     ins_names = [n for n, _ in inp["ins_nets"]]
-    ins_lbl = join_and(ins_names)
+    ins = net_list(inp["ins_nets"], data)
+    band = inp.get("band_label", "")
     d0 = None
     for n in ins_names:
         if data.get(n) and data[n]["found"]:
@@ -230,13 +244,15 @@ def draft_discussion(inp: dict, data: dict, comments=None) -> str:
             break
     paras = []
     if ex:
-        paras.append(f"{join_and(sorted(ex))} [[reason, e.g. have exceeded the regulatory time limit and were moved "
-                     f"to Other Business]]. These networks are not considered under this agenda item.")
+        exn = [(n, p) for n, p in inp["j_nets"] if n in ex]
+        paras.append(f"The {net_list(exn, data)} satellite networks [[reason, e.g. have exceeded the regulatory time "
+                     f"limit and were moved to Other Business]]. These satellite networks are not considered under "
+                     f"this agenda item.")
     if a["missing"]:
         paras.append(f"As of {inp.get('ific_label') or '[[BR IFIC No.]]'}, no special section has been published for "
-                     f"{join_and(a['missing'])}.")
-    paras.append(f"The frequency overlap differs between the {inp.get('j_operator', '')} satellite networks. The "
-                 f"coordination is therefore discussed in the following subsections.")
+                     f"the {', '.join(a['missing'])} satellite network{'s' if len(a['missing']) > 1 else ''}.")
+    paras.append(f"Since the frequency overlap differs between the {inp.get('j_operator', '')} satellite networks, "
+                 f"the coordination is discussed in the following subsections.")
     paras.append("The INS delegation [[general position of the INS delegation]].")
 
     li = net_lon(ins_names[0], inp["ins_nets"][0][1], data) if ins_names else None
@@ -246,19 +262,20 @@ def draft_discussion(inp: dict, data: dict, comments=None) -> str:
             continue
         k += 1
         names = [n for n, _ in g["nets"]]
-        paras.append(f"## {inp['item_no']}.{k}\t{_group_title(g, inp)}")
+        paras.append(f"## {inp['item_no']}.{k}\t{_group_title(g, inp, data)}")
         ov = []
         if g["se"]:
-            ov.append(f"{ranges_txt(g['se'])} (space-to-Earth)")
+            ov.append(f"{ranges_txt(g['se'])} in the space-to-Earth direction")
         if g["es"]:
-            ov.append(f"{ranges_txt(g['es'])} (Earth-to-space)")
+            ov.append(f"{ranges_txt(g['es'])} in the Earth-to-space direction")
         if g["opp"]:
-            ov.append(f"{ranges_txt(g['opp'])} (opposite direction)")
-        txt = f"The frequency assignments of {ins_lbl} overlap with those of {join_and(names)} in {join_and(ov)}."
+            ov.append(f"{ranges_txt(g['opp'])} in the opposite direction")
+        txt = (f"Both delegations agreed that the frequency overlap between the {ins} satellite network and the "
+               f"{net_list(g['nets'], data)} {sn(g['nets'])} in the {band} band occurred in {join_and(ov)}.")
         if not g["es"] and g["se"]:
-            txt += " There is no overlap in the Earth-to-space direction."
+            txt += " There is no frequency overlap in the Earth-to-space direction."
         if not g["se"] and g["es"]:
-            txt += " There is no overlap in the space-to-Earth direction."
+            txt += " There is no frequency overlap in the space-to-Earth direction."
         paras.append(txt)
         by_pos = {}
         for n, p in g["nets"]:
@@ -266,52 +283,51 @@ def draft_discussion(inp: dict, data: dict, comments=None) -> str:
         seps = []
         for lj, ns in sorted(by_pos.items(), key=lambda kv: separation(li, kv[0]) or 0):
             sp = separation(li, lj)
-            seps.append(f"{sp:.1f}° with {join_and(ns)} ({fmt_pos(lj)})" if sp is not None
-                        else f"{join_and(ns)} (NGSO)")
-        paras.append(f"The orbital separation{'s are' if len(seps) > 1 else ' is'} {join_and(seps)}.")
+            seps.append(f"{sp:g}° for the {', '.join(ns)} ({fmt_pos(lj)}) satellite network{'s' if len(ns) > 1 else ''}"
+                        if sp is not None else f"the {', '.join(ns)} (NGSO) satellite system")
+        paras.append(f"The orbital separation is {join_and(seps)}.")
         if d0:
             later = [n for n in names if date_key(protection_date(data[n], ss_types)) > date_key(d0)]
             earlier = [n for n in names if n not in later]
+            ib = ", ".join(ins_names)
             if later and not earlier:
-                paras.append(f"{ins_lbl} has an earlier date of receipt ({d0}) than "
-                             f"{'all of these networks' if len(later) > 1 else later[0]}.")
+                paras.append(f"The date of receipt of the {ib} satellite network ({d0}) is earlier than those of "
+                             f"{'all of these satellite networks' if len(later) > 1 else 'the ' + later[0] + ' satellite network'}.")
             elif earlier and not later:
-                paras.append(f"{'All of these networks have' if len(earlier) > 1 else earlier[0] + ' has'} an "
-                             f"earlier date of receipt than {ins_lbl} ({d0}).")
+                paras.append(f"{'All of these satellite networks have' if len(earlier) > 1 else 'The ' + earlier[0] + ' satellite network has'} "
+                             f"an earlier date of receipt than the {ib} satellite network ({d0}).")
             else:
-                paras.append(f"{ins_lbl} ({d0}) has an earlier date of receipt than {join_and(later)}, while "
-                             f"{join_and(earlier)} have earlier dates of receipt than {ins_lbl}.")
+                paras.append(f"The date of receipt of the {ib} satellite network ({d0}) is earlier than those of the "
+                             f"{', '.join(later)} satellite networks, while the {', '.join(earlier)} satellite networks "
+                             f"have earlier dates of receipt than the {ib} satellite network.")
         paras.append("The INS delegation [[position of the INS delegation for this case]].")
         paras.append("The J delegation [[response of the J delegation]].")
-    no_ov = [n for g in a["groups"] if not (g["se"] or g["es"] or g["opp"]) for n, _ in g["nets"]]
+    no_ov = [(n, p) for g in a["groups"] if not (g["se"] or g["es"] or g["opp"]) for n, p in g["nets"]]
     if no_ov:
         paras.append(f"## {inp['item_no']}.{k + 1}\tSatellite networks without frequency overlap")
-        paras.append(f"Both delegations noted that the frequency assignments of {join_and(no_ov)} do not overlap with "
-                     f"those of {ins_lbl} in the band(s) under consideration.")
+        paras.append(f"Both delegations noted that there is no frequency overlap between the {ins} satellite network "
+                     f"and the {net_list(no_ov, data)} {sn(no_ov)} in the {band} band.")
     return "\n\n".join(paras)
 
 
 def draft_conclusion(inp: dict, data: dict | None = None) -> str:
-    multi_ins = len(inp.get("ins_nets", [])) > 1
-    head = (f"Based on the above, both delegations agreed that coordination between the {inp['ins_label']} satellite "
-            f"network{'s' if multi_ins else ''} and the {inp['j_operator']} satellite networks listed in Table 2 in "
-            f"the {inp['band_label']} band")
-    if not data:
-        return head + (" [[was completed / was not completed and will be continued via correspondence or at the "
-                       "future satellite coordination meeting]].")
-    a = analyse(inp, data)
-    lines = [head + ":"]
-    k = 0
-    for g in a["groups"]:
-        if not (g["se"] or g["es"] or g["opp"]):
-            continue
-        letter = "abcdefghijklmnopqrstuvwxyz"[k]
-        k += 1
-        names = [n for n, _ in g["nets"]]
-        who = (f"{join_and(names)} (Section {inp['item_no']}.{k})" if len(names) <= 4
-               else f"the networks listed in Section {inp['item_no']}.{k}")
-        lines.append(f"{letter})\twith {who} [[was completed / was not completed and "
-                     f"will be continued via correspondence or at the future satellite coordination meeting]];")
-    if len(lines) > 1:
-        lines[-1] = lines[-1].rstrip(";") + "."
+    data = data or {}
+    ins = net_list(inp["ins_nets"], data)
+    band = inp.get("band_label", "")
+    outcome = ("[[was completed/was not completed and will be continued via correspondence or at the future "
+               "satellite coordination meeting]]")
+    a = analyse(inp, data) if data else {"groups": []}
+    groups = [g for g in a["groups"] if g["se"] or g["es"] or g["opp"]]
+    if len(groups) <= 1:
+        js = [(n, p) for n, p in inp["j_nets"] if n not in set(inp.get("exclude", []))]
+        return (f"Based on the above, both delegations agreed that coordination between the {ins} satellite network "
+                f"and the {net_list(js, data)} {sn(js)} in the {band} band {outcome}.")
+    lines = [f"Based on the above, both delegations agreed that coordination between the {ins} satellite network and "
+             f"the following satellite networks in the {band} band:"]
+    for k, g in enumerate(groups, 1):
+        letter = "abcdefghijklmnopqrstuvwxyz"[k - 1]
+        who = (f"the {net_list(g['nets'], data)} {sn(g['nets'])}" if len(g["nets"]) <= 6
+               else "the satellite networks")
+        end = ";" if k < len(groups) else "."
+        lines.append(f"{letter})\t{who} in Section {inp['item_no']}.{k} {outcome}{end}")
     return "\n\n".join(lines)

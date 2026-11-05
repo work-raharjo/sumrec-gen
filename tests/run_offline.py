@@ -20,8 +20,8 @@ inp["discussion"] = draft_discussion(inp, data)
 inp["conclusion"] = draft_conclusion(inp, data)
 print("---DISCUSSION---\n" + inp["discussion"])
 c = build_content(inp, data)
-print(c["overlap_lines"])
-print(c["ins_band_txt"])
+print(c["freq_rows"])
+
 tpl = Path(__file__).parent.parent / "templates" / "Template_summary_record_INS-J_2026.docx"
 Path(sys.argv[2]).write_bytes(build_docx(tpl.read_bytes(), c))
 print("written", sys.argv[2])

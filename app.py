@@ -23,7 +23,7 @@ from itu import fetch_networks
 APP_DIR = Path(__file__).parent
 DEFAULT_TEMPLATE = APP_DIR / "templates" / "Template_summary_record_INS-J_2026.docx"
 OPERATOR_NAMES = {
-    "BRI": "PT Bank Rakyat Indonesia (Persero) Tbk",
+    "BRI": "PT Bank Rakyat Indonesia (Persero), Tbk.",
 }
 SS_CHOICES = ["AR11/C", "CR/C", "AR11/A", "API/A", "API/C", "CR/D", "CR/E", "RES49", "PART I-S", "PART II-S"]
 
@@ -123,6 +123,7 @@ with left:
         for m in re.finditer(r"([\d.]+)\s*-\s*([\d.]+)", custom):
             custom_ranges.append((float(m.group(1)), float(m.group(2))))
         ss_types = st.multiselect("Special sections to list in Tables 1 and 2", SS_CHOICES, default=DEFAULT_SS_TYPES)
+        list_mods = st.checkbox("List every modification in Tables 1 and 2 (default: base special section only)")
         ific_label = st.text_input("Data cut-off label", value="BR IFIC [[No. (date)]]",
                                    help="Shown in source notes, e.g. 'BR IFIC 3083 (27.10.2026)'")
         names = tuple(n for n, _ in ins_nets + j_nets)
@@ -157,9 +158,10 @@ with left:
         "section_title": f"Coordination between {ins_op} satellite network(s) and {j_op} satellite network(s)",
         "item_no": item_no,
         "item_title": (f"Coordination between the {', '.join(f'{n} ({p})' for n, p in ins_nets)} satellite network "
-                       f"and the {j_op} satellite networks in the {band_txt} band"),
+                       f"and the {', '.join(f'{n} ({p})' for n, p in j_nets if n not in exclude)} satellite networks "
+                       f"in the {band_txt} band"),
         "ins_nets": ins_nets, "j_nets": j_nets, "exclude": exclude, "bands": bands, "custom_ranges": custom_ranges,
-        "ss_types": ss_types, "ific_label": ific_label, "band_label": band_txt, "j_operator": j_op,
+        "ss_types": ss_types, "list_mods": list_mods, "ific_label": ific_label, "band_label": band_txt, "j_operator": j_op,
         "ins_label": ", ".join(f"{n} ({p})" for n, p in ins_nets),
     }
     with st.expander("4. Headings, Discussion and Conclusion", expanded=True):
@@ -197,9 +199,9 @@ with right:
               font-size:12pt;line-height:1.35;color:#000}}
         h3{{font-size:12pt;margin:14px 0 8px}} h4{{font-size:12pt;text-decoration:underline;margin:14px 0 6px}}
         p{{text-align:justify;margin:6px 0}}
-        table{{border-collapse:collapse;width:100%;margin:6px 0 4px;font-size:9pt}}
+        table{{border-collapse:collapse;width:100%;margin:6px 0 4px;font-size:12pt}}
         td,th{{border:1px solid #000;padding:2px 5px;vertical-align:middle}}
-        td p,th p{{text-align:center;margin:0}} th{{background:#d9d9d9;font-weight:bold}} td:first-child p{{text-align:left}}
+        td p,th p{{text-align:center;margin:0}} th{{font-weight:normal}}
         mark{{background:#ffff00}}
         </style></head><body><div class="page">{html}</div></body></html>"""
         if hasattr(st, "iframe"):

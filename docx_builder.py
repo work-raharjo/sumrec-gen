@@ -72,7 +72,7 @@ def caption(text):
     return para(text, jc='center', b=True, u=True, keep=True)
 
 
-def cell(text, w, sz=18, b=False, jc='center', vmerge=None, shade=None):
+def cell(text, w, sz=24, b=False, jc='center', vmerge=None, shade=None):
     tcpr = f'<w:tcW w:w="{w}" w:type="dxa"/>'
     if vmerge == 'restart':
         tcpr += '<w:vMerge w:val="restart"/>'
@@ -88,14 +88,14 @@ def cell(text, w, sz=18, b=False, jc='center', vmerge=None, shade=None):
     return '<w:tc><w:tcPr>' + tcpr + '</w:tcPr>' + ps + '</w:tc>'
 
 
-def table(widths, header, rows, merge_cols=(), left_cols=(0,)):
+def table(widths, header, rows, merge_cols=(), left_cols=(), sz=24):
     tw = sum(widths)
     x = (f'<w:tbl><w:tblPr><w:tblW w:w="{tw}" w:type="dxa"/><w:jc w:val="center"/>' + BORDER
          + '<w:tblLayout w:type="fixed"/><w:tblLook w:val="0400" w:firstRow="0" w:lastRow="0" w:firstColumn="0" '
            'w:lastColumn="0" w:noHBand="0" w:noVBand="1"/></w:tblPr><w:tblGrid>'
          + ''.join(f'<w:gridCol w:w="{w}"/>' for w in widths) + '</w:tblGrid>')
     x += '<w:tr><w:trPr><w:cantSplit/><w:tblHeader/></w:trPr>' + ''.join(
-        cell(h, w, b=True, shade='D9D9D9') for h, w in zip(header, widths)) + '</w:tr>'
+        cell(h, w, sz=sz) for h, w in zip(header, widths)) + '</w:tr>'
     for ri, r in enumerate(rows):
         x += '<w:tr><w:trPr><w:cantSplit/></w:trPr>'
         for ci, (v, w) in enumerate(zip(r, widths)):
@@ -108,7 +108,7 @@ def table(widths, header, rows, merge_cols=(), left_cols=(0,)):
                     vm, v = 'cont', ''
                 elif nxt:
                     vm = 'restart'
-            x += cell(v, w, jc='left' if ci in left_cols else 'center', vmerge=vm)
+            x += cell(v, w, sz=sz, jc='left' if ci in left_cols else 'center', vmerge=vm)
         x += '</w:tr>'
     return x + '</w:tbl>'
 
@@ -145,8 +145,23 @@ def rich_text(text):
     return out
 
 
+def band_block(label, rows):
+    """Borderless 'X-Band : <range> in the ... direction, as appropriate;' block (reference layout)."""
+    nb = ('<w:tblBorders>' + ''.join(f'<w:{x} w:val="none" w:sz="0" w:space="0" w:color="auto"/>'
+          for x in ("top", "left", "bottom", "right", "insideH", "insideV")) + '</w:tblBorders>')
+
+    def tc(w, paras_txt):
+        ps = ''.join('<w:p><w:pPr><w:spacing w:before="120" w:after="120"/><w:jc w:val="both"/>' + rpr()
+                     + '</w:pPr>' + runs(t) + '</w:p>' for t in paras_txt)
+        return f'<w:tc><w:tcPr><w:tcW w:w="{w}" w:type="dxa"/></w:tcPr>{ps}</w:tc>'
+    return ('<w:tbl><w:tblPr><w:tblW w:w="9006" w:type="dxa"/>' + nb + '<w:tblLayout w:type="fixed"/>'
+            '<w:tblLook w:val="04A0" w:firstRow="1" w:lastRow="0" w:firstColumn="1" w:lastColumn="0" w:noHBand="0" '
+            'w:noVBand="1"/></w:tblPr><w:tblGrid><w:gridCol w:w="1526"/><w:gridCol w:w="567"/><w:gridCol w:w="6913"/>'
+            '</w:tblGrid><w:tr>' + tc(1526, [label]) + tc(567, [':']) + tc(6913, rows) + '</w:tr></w:tbl>')
+
+
 def section_xml(c: dict) -> str:
-    W5 = [1900, 1120, 2080, 1340, 2200]
+    W5 = [2450, 1150, 1700, 1550, 1775]
     body = h3(c['section_no'], c['section_title']) + h3(c['item_no'], c['item_title'])
 
     body += h4('ITU Publications')
@@ -154,36 +169,31 @@ def section_xml(c: dict) -> str:
                  'considered based on the following ITU publications.', spacing=(240, 240))
     body += caption('Table 1. The Indonesian satellite network(s)')
     body += table(W5, ['Network Name', 'Orbital Location', 'Special Section No.', 'Date of Receipt by BR',
-                       'WIC/IFIC date'], c['t1'], merge_cols=(0, 1))
+                       'WIC/IFIC date'], c['t1'], merge_cols=(0, 1), sz=22)
     body += empty()
     body += caption('Table 2. The Japanese satellite network(s)')
     body += table(W5, ['Network Name', 'Orbital Position', 'Special Section No.', 'Date of Receipt by BR',
-                       'Published Date'], c['t2'], merge_cols=(0, 1))
-    body += para(c['source_note'] + ' Special sections listed: ' + ', '.join(c['ss_types'])
-                 + ' and their modifications.', jc='left', sz=18, spacing=(60, 120))
+                       'Published Date'], c['t2'], merge_cols=(0, 1), sz=22)
     body += empty()
 
     body += h4('Orbital Separation')
     body += para('The following table presents the geocentric orbital separations between the Indonesian and '
                  'Japanese satellite networks under consideration.', spacing=(240, 240))
     body += caption('Table 3. Orbital Separation')
-    body += table([3000, 3690, 1950], ['Indonesian satellite network(s)', 'Japanese satellite network(s)',
-                                       'Orbital separation (°)'], c['t3'], merge_cols=(0,))
+    body += table([3394, 3296, 1950], ['Indonesian satellite network(s)', 'Japanese satellite network(s)',
+                                       'Orbital separation (\u00b0)'], c['t3'])
     body += empty()
 
     body += h4('Frequency Overlap')
-    intro = (f"The {c['band_label'] + '-band ' if c['band_label'] else ''}frequency assignments of the "
-             f"{c['ins_label']} satellite network(s) are in the bands {c['ins_band_txt']}. " if c['ins_band_txt'] else '')
-    lines = c.get('overlap_lines') or []
-    if lines:
-        body += para(intro + 'Both delegations confirmed that the frequency assignments of the Indonesian and '
-                     'Japanese satellite networks under consideration overlap in the following frequency ranges:',
+    band = c['band_label']
+    if c.get('freq_rows'):
+        body += para(f"Both delegations agreed that the frequency overlap between the {c['ins_label']} satellite network "
+                     f"and the {c['j_list']} satellite networks in the {band} band occurred in these following bands:",
                      spacing=(240, 120))
-        for i, ln in enumerate(lines):
-            end = ';' if i < len(lines) - 1 else '.'
-            body += list_para(f"{'abcdefghij'[i]})\t{ln}{end}", spacing=(0, 60 if end == ';' else 240))
+        body += band_block(f"{band}-Band" if band else "", c['freq_rows'])
     else:
-        body += para(intro + 'No frequency overlap was identified in the band(s) under consideration.',
+        body += para(f"Both delegations agreed that there is no frequency overlap between the {c['ins_label']} "
+                     f"satellite network and the {c['j_list']} satellite networks in the {band} band.",
                      spacing=(240, 240))
 
     body += h4('Discussion')
