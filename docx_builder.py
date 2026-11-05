@@ -132,6 +132,11 @@ def subheading(text):
             + f'<w:t xml:space="preserve">{escape(title.strip())}</w:t></w:r></w:p>')
 
 
+def _squash(t):
+    """Collapse ordinary whitespace only; keeps non-breaking spaces (str.split would drop them)."""
+    return re.sub(r'[ \t\r\n]+', ' ', t).strip()
+
+
 def rich_text(text):
     """Blank line separates paragraphs. '## ' starts a subsection heading, 'a)<TAB>' or 'a) ' a lettered line."""
     out = ''
@@ -139,9 +144,9 @@ def rich_text(text):
         if p.startswith('## '):
             out += subheading(p[3:].strip())
         elif re.match(r'^[a-z]\)[\t ]', p):
-            out += list_para(p[:2] + '\t' + ' '.join(p[3:].split()), spacing=(0, 80))
+            out += list_para(p[:2] + '\t' + _squash(p[3:]), spacing=(0, 80))
         else:
-            out += para(' '.join(p.split()), spacing=(0, 200))
+            out += para(_squash(p), spacing=(0, 200))
     return out
 
 
