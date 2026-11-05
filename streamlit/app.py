@@ -21,7 +21,7 @@ from docx_builder import build_docx
 from itu import fetch_networks
 
 APP_DIR = Path(__file__).parent
-DEFAULT_TEMPLATE = APP_DIR / "templates" / "Template_summary_record_INS-J_2026.docx"
+DEFAULT_TEMPLATE = APP_DIR.parent / "templates" / "Template_summary_record_INS-J_2026.docx"
 OPERATOR_NAMES = {
     "BRI": "PT Bank Rakyat Indonesia (Persero), Tbk.",
 }

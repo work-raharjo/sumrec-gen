@@ -1,7 +1,7 @@
 """Offline end-to-end check: agenda xlsx + saved ITU data -> docx."""
 import json, sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(Path(__file__).parent))
 from agenda import read_agenda
 from core import build_content, draft_discussion, draft_conclusion
 from docx_builder import build_docx
@@ -10,7 +10,7 @@ ag = read_agenda(sys.argv[1])
 print({k: [i["item"] for i in v] for k, v in ag.items()})
 it = next(i for i in ag["BRI"] if i["band"] == "X" and i["j_operator"] == "MoD/MCC")
 print(it["item"], it["band"], len(it["j_networks"]), it["comments"][:2])
-data = json.loads(Path(__file__).with_name("itu_fixture.json").read_text())
+data = json.loads((Path(__file__).parent.parent / "tests" / "itu_fixture.json").read_text())
 inp = {"section_no": "2.2", "section_title": "Coordination between PT Bank Rakyat Indonesia (Persero) Tbk satellite network(s) and MoD/MCC satellite network(s)",
        "item_no": "2.2.3", "item_title": "Coordination between the NUSANTARA-BR1-E (150.5E) satellite network and the MoD/MCC satellite networks in the X band",
        "ins_nets": it["ins_networks"], "j_nets": it["j_networks"], "exclude": ["JMCS-5A", "JMCS-5D"], "bands": ["X"],

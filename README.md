@@ -1,47 +1,56 @@
 # Summary Record Generator (INS-J)
 
-Streamlit web app that builds one section of the INS-J satellite coordination meeting summary record
-(.docx) from the official template, with a live preview beside the input form.
+Web app that builds one section of the INS-J satellite coordination meeting summary record (.docx) from the
+official template, with a live preview of the document beside the form. Deployed on Vercel as a static site plus
+one serverless function.
 
-## Run
+## How it works
 
-```
-pip install -r requirements.txt
-streamlit run app.py
-```
+- **Browser** (`index.html`, `js/`): reads the draft agenda (.xlsx), computes the tables, overlap and draft text,
+  writes the .docx into the template with JSZip and previews it with docx-preview. Nothing is uploaded; the
+  template and agenda stay in the browser.
+- **`/api/itu`** (`api/itu.js`): small Vercel function that queries the public ITU Space Explorer API (special
+  sections, dates of receipt, orbital positions, frequency ranges). It exists only because browsers may not call
+  itu.int directly (CORS).
 
-The app opens at http://localhost:8501. To share it with the team, deploy the folder to Streamlit
-Community Cloud or any server that runs Python (Vercel does not run Streamlit).
+The .docx is generated in the browser on purpose: the template is about 7.7 MB (embedded fonts), above the
+4.5 MB request and response limit of Vercel functions.
 
-## How to use
+## Deploy (Vercel)
 
-1. **Template and agenda**: the INS-J template is bundled in `templates/`; upload another one to replace it.
-   Upload the draft agenda (.xlsx) to pick items from it.
-2. **Agenda item**: choose the sheet (operator) and item. Networks, band and operator fill in automatically
-   and can be edited. "Agenda comments" shows the INS/J comment history for that row.
-3. **ITU Space Explorer data**: choose the band window(s), then click **Fetch from ITU Space Explorer**.
-   The app pulls the special sections (AR11/C, CR/C and modifications by default), dates of receipt,
-   orbital positions and frequency ranges for every network. Use **Save ITU data** to keep a snapshot
-   and **load saved ITU data** to reuse it offline. Exclude networks that moved to Other Business.
-4. **Text**: headings, Discussion and Conclusion are drafted from the data and can be edited.
-   Write `[[text]]` for anything still to be completed; it comes out highlighted yellow in the docx.
+Import the repo in Vercel with the default settings (Framework preset: Other, no build command). `vercel.json`
+gives the ITU function up to 60 s. `streamlit/` and `tests/` are excluded by `.vercelignore`.
 
-The right side shows the generated document; **Download .docx** saves it.
+Local run: `npx vercel dev`, then open http://localhost:3000.
 
-## What is computed
+## Using the app
 
-- Table 1 and 2: special sections per network from the BR IFIC publication history.
-- Table 3: geocentric orbital separation, grouped by orbital position.
-- Table 4: overlapping ranges per Japanese network (same direction, plus opposite direction when present),
-  from the coordination and notification notices, limited to the chosen band window(s).
-- Discussion draft: networks not yet published, and which Japanese networks were received by the BR
-  after the Indonesian network.
+1. **Template and agenda**: the INS-J template in `templates/` loads by default; another one can be uploaded.
+   Upload the draft agenda (.xlsx) to pick a sheet and item. Networks, band and operators fill in automatically.
+2. **Agenda item**: everything stays editable. "Agenda comments" shows the INS/J comment history of the row.
+3. **ITU Space Explorer data**: choose the band window(s) and click **Fetch from ITU Space Explorer**.
+   **Save data** keeps a JSON snapshot; **Load data** reuses one without calling ITU. Tick networks to exclude
+   (for example those moved to Other Business).
+4. **Text**: headings follow the networks automatically until edited. Discussion and Conclusion are drafted from the
+   data: one subsection per overlap group (overlap, minimal orbital separation, BRI assessment, RR Appendix 5
+   coordination arc for C/Ku/Ka, counterpart response, agreement, bracketed conclusion).
+   - Blank line between paragraphs
+   - `## 2.2.3.1<TAB>Title` starts a numbered subsection
+   - `a)<TAB>text` is a lettered line
+   - `[[text]]` is highlighted yellow (still to be completed)
+
+**Download .docx** saves the document. Form contents and fetched data are kept in the browser between visits.
 
 ## Files
 
-- `app.py` Streamlit UI
-- `itu.py` ITU Space Explorer client (public endpoints, no login)
-- `agenda.py` draft agenda reader
-- `core.py` tables, overlap and text drafting
-- `docx_builder.py` writes the section into the template
-- `tests/` offline check with saved ITU data (`python tests/run_offline.py <agenda.xlsx> out.docx`)
+| Path | Purpose |
+| --- | --- |
+| `index.html` | UI |
+| `js/core.js` | agenda parsing, overlap analysis, tables, draft text |
+| `js/docx.js` | writes the section into the template |
+| `js/app.js` | UI logic, ITU fetch, preview |
+| `api/itu.js` | Vercel function, ITU Space Explorer proxy |
+| `templates/` | INS-J summary record template |
+| `vendor/` | JSZip, docx-preview, SheetJS (bundled, no CDN) |
+| `streamlit/` | earlier Streamlit version (same logic in Python; `streamlit run streamlit/app.py`) |
+| `tests/itu_fixture.json` | ITU data for item 2.2.3 (BR IFIC 3083), usable with **Load data** |

@@ -1,0 +1,5 @@
+{
+  "functions": {
+    "api/itu.js": { "maxDuration": 60 }
+  }
+}

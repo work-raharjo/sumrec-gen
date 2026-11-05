@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Summary Record Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f5f8; --panel:#ffffff; --ink:#15202b; --muted:#5b6876; --line:#dfe4ea; --soft:#eef2f7;
+  --accent:#0b5cad; --accent-ink:#ffffff; --accent-soft:#e3eefa; --warn:#9a5b00; --warn-bg:#fff6e5;
+  --ok:#1d6b3a; --ok-bg:#e8f5ec; --err:#a1261c; --err-bg:#fdecea; --mark:#fff200;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{height:56px;display:flex;align-items:center;gap:16px;padding:0 20px;background:var(--panel);border-bottom:1px solid var(--line)}
+header h1{font-size:16px;margin:0;font-weight:700;letter-spacing:-.01em}
+header .sub{color:var(--muted);font-size:13px}
+header .sp{flex:1}
+.btn{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:8px;padding:7px 12px;font:inherit;font-weight:500;cursor:pointer}
+.btn:hover{border-color:#b9c3cf}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+main{display:grid;grid-template-columns:minmax(380px,44%) 1fr;height:calc(100% - 56px)}
+#form{overflow:auto;padding:16px 18px 40px;border-right:1px solid var(--line)}
+#previewPane{overflow:auto;background:#d9dee5;position:relative}
+section.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin-bottom:14px}
+section.card>h2{margin:0;padding:11px 14px;font-size:13px;font-weight:600;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
+section.card>h2 .n{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-size:11px}
+.body{padding:12px 14px;display:grid;gap:10px}
+.row{display:grid;grid-template-columns:1fr 2fr;gap:10px}
+.row.even{grid-template-columns:1fr 1fr}
+label{display:grid;gap:4px;font-size:12px;color:var(--muted);font-weight:500}
+input[type=text],select,textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:7px 9px;font:inherit;font-size:13px;color:var(--ink);background:#fff}
+textarea{resize:vertical;min-height:60px;font-family:inherit}
+textarea.mono{font-size:12.5px;line-height:1.5}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
+.hint{font-size:12px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:12px;cursor:pointer;user-select:none;background:#fff;color:var(--ink)}
+.chip input{margin:0}
+.chip:has(input:checked){background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.status{font-size:12.5px;padding:7px 10px;border-radius:8px}
+.status.ok{background:var(--ok-bg);color:var(--ok)}
+.status.warn{background:var(--warn-bg);color:var(--warn)}
+.status.err{background:var(--err-bg);color:var(--err)}
+.status:empty{display:none}
+.inline{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+details.comments{border:1px dashed var(--line);border-radius:8px;padding:6px 10px;font-size:12.5px}
+details.comments summary{cursor:pointer;color:var(--accent);font-weight:500}
+details.comments dt{font-weight:600;margin-top:6px}
+details.comments dd{margin:2px 0 0;white-space:pre-wrap;color:var(--muted)}
+.file{display:flex;align-items:center;gap:8px;font-size:12.5px}
+.file input{font-size:12px}
+#excl{max-height:140px;overflow:auto}
+#preview{padding:24px 0}
+#preview .docx-wrapper{background:transparent !important;padding:0 !important}
+#preview .docx-wrapper>section.docx{box-shadow:0 1px 6px rgba(0,0,0,.18);margin:0 auto 20px !important}
+#previewMsg{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px;text-align:center;padding:24px}
+#busy{position:sticky;top:10px;float:right;margin-right:14px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:12px;color:var(--muted);z-index:2;display:none}
+.mark{background:var(--mark)}
+@media (max-width:900px){
+  main{grid-template-columns:1fr;height:auto}
+  #form{border-right:0}
+  #previewPane{height:80vh}
+  header .sub{display:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Summary Record Generator</h1>
+  <span class="sub">INS-J satellite coordination meeting</span>
+  <span class="sp"></span>
+  <button class="btn primary" id="download" disabled>Download .docx</button>
+</header>
+<main>
+  <div id="form">
+    <section class="card">
+      <h2><span class="n">1</span>Template and agenda</h2>
+      <div class="body">
+        <div class="file"><span>Template:</span> <strong id="tplName">loading...</strong></div>
+        <label>Replace template (.docx)<input type="file" id="tplFile" accept=".docx"></label>
+        <label>Draft agenda (.xlsx), optional<input type="file" id="agendaFile" accept=".xlsx"></label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2><span class="n">2</span>Agenda item</h2>
+      <div class="body">
+        <div class="row" id="pickRow" hidden>
+          <label>Sheet<select id="sheet"></select></label>
+          <label>Item<select id="item"></select></label>
+        </div>
+        <details class="comments" id="commentsBox" hidden><summary>Agenda comments</summary><dl id="comments"></dl></details>
+        <div class="row">
+          <label>Item no.<input type="text" id="item_no" value="2.2.1"></label>
+          <label>Indonesian operator (heading)<input type="text" id="ins_op" placeholder="PT Bank Rakyat Indonesia (Persero), Tbk."></label>
+        </div>
+        <div class="row">
+          <label>Short name<input type="text" id="ins_short" placeholder="BRI"></label>
+          <label>Japanese operator<input type="text" id="j_op" placeholder="MoD/MCC"></label>
+        </div>
+        <label>Band label (used in headings and text)<input type="text" id="band_label" placeholder="X"></label>
+        <label>Indonesian network(s), one per line: NAME (POS)<textarea id="ins_nets" rows="2"></textarea></label>
+        <label>Japanese network(s), one per line: NAME (POS)<textarea id="j_nets" rows="6"></textarea></label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2><span class="n">3</span>ITU Space Explorer data</h2>
+      <div class="body">
+        <div><div class="hint" style="margin-bottom:5px">Band window(s) for the overlap</div><div class="chips" id="bands"></div></div>
+        <label>Extra ranges in MHz (e.g. 7250-7750; 7900-8400)<input type="text" id="custom"></label>
+        <div><div class="hint" style="margin-bottom:5px">Special sections for Tables 1 and 2</div><div class="chips" id="ss"></div></div>
+        <label class="chip" style="justify-self:start"><input type="checkbox" id="list_mods"> List every modification (default: base special section only)</label>
+        <label>Data cut-off (shown in the text)<input type="text" id="ific_label" value="BR IFIC [[No. (date)]]"></label>
+        <div class="inline">
+          <button class="btn primary" id="fetch">Fetch from ITU Space Explorer</button>
+          <button class="btn" id="saveItu" disabled>Save data (.json)</button>
+          <label class="btn" style="display:inline-flex;color:var(--ink)">Load data (.json)<input type="file" id="loadItu" accept=".json" hidden></label>
+        </div>
+        <div class="status" id="ituStatus"></div>
+        <div><div class="hint" style="margin-bottom:5px">Exclude from this item (e.g. moved to Other Business)</div><div class="chips" id="excl"></div></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2><span class="n">4</span>Headings, Discussion and Conclusion</h2>
+      <div class="body">
+        <label><span id="secLbl">Heading 2.2</span><input type="text" id="section_title"></label>
+        <label><span id="itemLbl">Heading 2.2.1</span><textarea id="item_title" rows="3"></textarea></label>
+        <div class="inline"><button class="btn" id="redraft">Redraft Discussion and Conclusion from data</button></div>
+        <div class="hint">Blank line between paragraphs. A line starting with <code>## 2.2.3.1</code> then a tab starts a subsection, <code>a)</code> a lettered line, and <code>[[text]]</code> is highlighted yellow.</div>
+        <label>Discussion<textarea id="discussion" class="mono" rows="16"></textarea></label>
+        <label>Conclusion<textarea id="conclusion" class="mono" rows="6"></textarea></label>
+      </div>
+    </section>
+  </div>
+  <div id="previewPane">
+    <div id="busy">Updating...</div>
+    <div id="previewMsg">Fill in the networks, or pick an agenda item, to see the document here.</div>
+    <div id="preview"></div>
+  </div>
+</main>
+<script src="vendor/jszip.min.js"></script>
+<script src="vendor/docx-preview.min.js"></script>
+<script src="vendor/xlsx.full.min.js"></script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
