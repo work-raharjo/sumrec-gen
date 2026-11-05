@@ -56,7 +56,7 @@ def text_to_nets(txt):
 
 
 ss = st.session_state
-for k, v in {"item_no": "2.2.1", "ins_op": "", "ins_nets": "", "j_op": "", "j_nets": "", "band_txt": "",
+for k, v in {"item_no": "2.2.1", "ins_op": "", "ins_short": "", "ins_nets": "", "j_op": "", "j_nets": "", "band_txt": "",
              "bands": []}.items():
     ss.setdefault(k, v)
 left, right = st.columns([1, 1.15], gap="large")
@@ -90,6 +90,7 @@ with left:
                 ss.loaded_item = key
                 ss.item_no = item["item"]
                 ss.ins_op = OPERATOR_NAMES.get(item["ins_operator"], item["ins_operator"])
+                ss.ins_short = item["ins_operator"]
                 ss.ins_nets = nets_to_text(item["ins_networks"])
                 ss.j_op = item["j_operator"]
                 ss.j_nets = nets_to_text(item["j_networks"])
@@ -107,6 +108,7 @@ with left:
         c1, c2 = st.columns([1, 2])
         item_no = c1.text_input("Item no.", key="item_no")
         ins_op = c2.text_input("Indonesian operator (as written in the heading)", key="ins_op")
+        ins_short = st.text_input("Indonesian operator, short name (used in the Discussion, e.g. BRI)", key="ins_short")
         ins_nets_txt = st.text_area("Indonesian network(s), one per line: NAME (POS)", key="ins_nets", height=68)
         c1, c2 = st.columns([1, 2])
         j_op = c1.text_input("Japanese operator", key="j_op")
@@ -161,7 +163,7 @@ with left:
                        f"and the {', '.join(f'{n} ({p})' for n, p in j_nets if n not in exclude)} satellite networks "
                        f"in the {band_txt} band"),
         "ins_nets": ins_nets, "j_nets": j_nets, "exclude": exclude, "bands": bands, "custom_ranges": custom_ranges,
-        "ss_types": ss_types, "list_mods": list_mods, "ific_label": ific_label, "band_label": band_txt, "j_operator": j_op,
+        "ss_types": ss_types, "list_mods": list_mods, "ins_short": ins_short, "ific_label": ific_label, "band_label": band_txt, "j_operator": j_op,
         "ins_label": ", ".join(f"{n} ({p})" for n, p in ins_nets),
     }
     with st.expander("4. Headings, Discussion and Conclusion", expanded=True):

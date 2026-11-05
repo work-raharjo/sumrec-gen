@@ -229,19 +229,21 @@ def _group_title(g, inp, data):
             f"{join_and([x for x in parts if x])}")
 
 
+# RR Appendix 5, Table 5-1 coordination arcs (GSO/GSO, No. 9.7) for the common FSS bands
+COORD_ARC = {"C": 7, "Ku": 6, "Ka": 8}
+
+
 def draft_discussion(inp: dict, data: dict, comments=None) -> str:
-    """Suggested Discussion (editable). '## ' starts a numbered subsection, [[...]] marks text to complete."""
-    ss_types = inp.get("ss_types") or DEFAULT_SS_TYPES
+    """Suggested Discussion (editable). '## ' starts a numbered subsection, [[...]] marks text to complete.
+    Subsection wording follows the BRI coordination agreements (e.g. BRI-ADoD)."""
     ex = set(inp.get("exclude", []))
     a = analyse(inp, data)
     ins_names = [n for n, _ in inp["ins_nets"]]
     ins = net_list(inp["ins_nets"], data)
     band = inp.get("band_label", "")
-    d0 = None
-    for n in ins_names:
-        if data.get(n) and data[n]["found"]:
-            d0 = protection_date(data[n], ss_types)
-            break
+    bandB = f"{band}-Band" if band else "band"
+    me = inp.get("ins_short") or "BRI"
+    them = inp.get("j_operator") or "the J delegation"
     paras = []
     if ex:
         exn = [(n, p) for n, p in inp["j_nets"] if n in ex]
@@ -251,18 +253,20 @@ def draft_discussion(inp: dict, data: dict, comments=None) -> str:
     if a["missing"]:
         paras.append(f"As of {inp.get('ific_label') or '[[BR IFIC No.]]'}, no special section has been published for "
                      f"the {', '.join(a['missing'])} satellite network{'s' if len(a['missing']) > 1 else ''}.")
-    paras.append(f"Since the frequency overlap differs between the {inp.get('j_operator', '')} satellite networks, "
-                 f"the coordination is discussed in the following subsections.")
-    paras.append("The INS delegation [[general position of the INS delegation]].")
+    groups = [g for g in a["groups"] if g["se"] or g["es"] or g["opp"]]
+    if len(groups) > 1:
+        paras.append(f"Since the frequency overlap differs between the {them} satellite networks, the coordination is "
+                     f"discussed in the following subsections.")
 
     li = net_lon(ins_names[0], inp["ins_nets"][0][1], data) if ins_names else None
-    k = 0
-    for g in a["groups"]:
-        if not (g["se"] or g["es"] or g["opp"]):
-            continue
-        k += 1
-        names = [n for n, _ in g["nets"]]
-        paras.append(f"## {inp['item_no']}.{k}\t{_group_title(g, inp, data)}")
+    arc = COORD_ARC.get(band)
+    for k, g in enumerate(groups, 1):
+        lst = net_list(g["nets"], data)
+        many = len(g["nets"]) > 1
+        SN = "Satellite Networks" if many else "Satellite Network"
+        sn_ = "satellite networks" if many else "satellite network"
+        paras.append(f"## {inp['item_no']}.{k}\tCoordination between {ins} Satellite Network and the {lst} {SN} "
+                     f"in the {bandB}")
         ov = []
         if g["se"]:
             ov.append(f"{ranges_txt(g['se'])} in the space-to-Earth direction")
@@ -270,43 +274,41 @@ def draft_discussion(inp: dict, data: dict, comments=None) -> str:
             ov.append(f"{ranges_txt(g['es'])} in the Earth-to-space direction")
         if g["opp"]:
             ov.append(f"{ranges_txt(g['opp'])} in the opposite direction")
-        txt = (f"Both delegations agreed that the frequency overlap between the {ins} satellite network and the "
-               f"{net_list(g['nets'], data)} {sn(g['nets'])} in the {band} band occurred in {join_and(ov)}.")
-        if not g["es"] and g["se"]:
-            txt += " There is no frequency overlap in the Earth-to-space direction."
-        if not g["se"] and g["es"]:
-            txt += " There is no frequency overlap in the space-to-Earth direction."
-        paras.append(txt)
-        by_pos = {}
-        for n, p in g["nets"]:
-            by_pos.setdefault(net_lon(n, p, data), []).append(n)
-        seps = []
-        for lj, ns in sorted(by_pos.items(), key=lambda kv: separation(li, kv[0]) or 0):
-            sp = separation(li, lj)
-            seps.append(f"{sp:g}° for the {', '.join(ns)} ({fmt_pos(lj)}) satellite network{'s' if len(ns) > 1 else ''}"
-                        if sp is not None else f"the {', '.join(ns)} (NGSO) satellite system")
-        paras.append(f"The orbital separation is {join_and(seps)}.")
-        if d0:
-            later = [n for n in names if date_key(protection_date(data[n], ss_types)) > date_key(d0)]
-            earlier = [n for n in names if n not in later]
-            ib = ", ".join(ins_names)
-            if later and not earlier:
-                paras.append(f"The date of receipt of the {ib} satellite network ({d0}) is earlier than those of "
-                             f"{'all of these satellite networks' if len(later) > 1 else 'the ' + later[0] + ' satellite network'}.")
-            elif earlier and not later:
-                paras.append(f"{'All of these satellite networks have' if len(earlier) > 1 else 'The ' + earlier[0] + ' satellite network has'} "
-                             f"an earlier date of receipt than the {ib} satellite network ({d0}).")
+        paras.append(f"Both parties confirmed that the frequency overlap between {ins} Satellite Network and the {lst} "
+                     f"{sn_} in the {bandB} occurred in {join_and(ov)}.")
+        seps = [separation(li, net_lon(n, p, data)) for n, p in g["nets"]]
+        seps = [x for x in seps if x is not None]
+        min_sep = min(seps) if seps else None
+        if min_sep is not None:
+            if many:
+                paras.append(f"Both parties confirmed that the minimal orbital separations between {ins} Satellite "
+                             f"Network and the {lst} satellite networks are greater than and equal to {min_sep:g}°.")
             else:
-                paras.append(f"The date of receipt of the {ib} satellite network ({d0}) is earlier than those of the "
-                             f"{', '.join(later)} satellite networks, while the {', '.join(earlier)} satellite networks "
-                             f"have earlier dates of receipt than the {ib} satellite network.")
-        paras.append("The INS delegation [[position of the INS delegation for this case]].")
-        paras.append("The J delegation [[response of the J delegation]].")
+                paras.append(f"Both parties confirmed that the orbital separation between {ins} Satellite Network and "
+                             f"the {lst} satellite network is {min_sep:g}°.")
+        paras.append(f"[[{me} believed that the unacceptable interference between those satellite networks is minimal "
+                     f"and the orbital separations are considered adequate to avoid any harmful interference between "
+                     f"those satellite networks in the {bandB}.]]")
+        if arc and min_sep is not None and min_sep >= arc:
+            paras.append(f"[[{me} also believed that the condition is also met in accordance with the threshold of arc "
+                         f"coordination as governed in ITU Radio Regulations, Appendix 5, Table 5-1 for the {bandB} "
+                         f"frequency spectrum coordination ± {arc}°. Therefore, the coordination between these "
+                         f"satellite networks could be considered as complete coordination.]]")
+        paras.append(f"{them} [[agreed with the proposal that coordination between the {me} and {them} satellite "
+                     f"networks can be considered complete / response of {them}]].")
+        paras.append(f"[[{me} agreed to complete the satellite coordination between {ins} Satellite Network and the "
+                     f"{lst} {SN} in the {bandB}.]]")
+        paras.append(f"[Conclusion: Based on the above, coordination between {ins} Satellite Network and the {lst} "
+                     f"{sn_} in the {bandB} [[can be considered complete / will be continued via correspondence or at "
+                     f"the future satellite coordination meeting]]]")
     no_ov = [(n, p) for g in a["groups"] if not (g["se"] or g["es"] or g["opp"]) for n, p in g["nets"]]
     if no_ov:
-        paras.append(f"## {inp['item_no']}.{k + 1}\tSatellite networks without frequency overlap")
-        paras.append(f"Both delegations noted that there is no frequency overlap between the {ins} satellite network "
-                     f"and the {net_list(no_ov, data)} {sn(no_ov)} in the {band} band.")
+        k = len(groups) + 1
+        paras.append(f"## {inp['item_no']}.{k}\tCoordination between {ins} Satellite Network and the "
+                     f"{net_list(no_ov, data)} Satellite Network{'s' if len(no_ov) > 1 else ''} in the {bandB}")
+        paras.append(f"Both parties confirmed that there is no frequency overlap between {ins} Satellite Network and "
+                     f"the {net_list(no_ov, data)} satellite network{'s' if len(no_ov) > 1 else ''} in the {bandB}. "
+                     f"Therefore, coordination is not required.")
     return "\n\n".join(paras)
 
 
