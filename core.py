@@ -29,12 +29,12 @@ def fmt_num(v: float) -> str:
         groups.insert(0, ip[-3:])
         ip = ip[:-3]
     groups.insert(0, ip)
-    out = ("-" if neg else "") + " ".join(groups)
+    out = ("-" if neg else "") + "\u00a0".join(groups)  # non-breaking thousands separator
     return out + ("." + dp if dp else "")
 
 
 def fmt_range(r) -> str:
-    return f"{fmt_num(r[0])} – {fmt_num(r[1])}"
+    return f"{fmt_num(r[0])}\u00a0\u2013 {fmt_num(r[1])}"
 
 
 def fmt_pos(lon) -> str:
@@ -254,9 +254,27 @@ def draft_discussion(inp: dict, data: dict, comments=None) -> str:
         paras.append(f"As of {inp.get('ific_label') or '[[BR IFIC No.]]'}, no special section has been published for "
                      f"the {', '.join(a['missing'])} satellite network{'s' if len(a['missing']) > 1 else ''}.")
     groups = [g for g in a["groups"] if g["se"] or g["es"] or g["opp"]]
-    if len(groups) > 1:
-        paras.append(f"Since the frequency overlap differs between the {them} satellite networks, the coordination is "
-                     f"discussed in the following subsections.")
+    no_ov_nets = [(n, p) for g in a["groups"] if not (g["se"] or g["es"] or g["opp"]) for n, p in g["nets"]]
+    if len(groups) + (1 if no_ov_nets else 0) > 1:
+        paras.append(f"Since the overlapping frequency ranges differ between the {them} satellite networks, the "
+                     f"coordination between {ins} Satellite Network and the {them} satellite networks in the {bandB} "
+                     f"will be divided as below:")
+        items = []
+        for k, g in enumerate(groups, 1):
+            ov = []
+            if g["se"]:
+                ov.append(f"{ranges_txt(g['se'])} (space-to-Earth)")
+            if g["es"]:
+                ov.append(f"{ranges_txt(g['es'])} (Earth-to-space)")
+            if g["opp"]:
+                ov.append(f"{ranges_txt(g['opp'])} (opposite direction)")
+            items.append(f"Section {inp['item_no']}.{k}: coordination with the {net_list(g['nets'], data)} "
+                         f"{sn(g['nets'])}, with the frequency overlap in {join_and(ov)}")
+        if no_ov_nets:
+            items.append(f"Section {inp['item_no']}.{len(groups) + 1}: the {net_list(no_ov_nets, data)} "
+                         f"{sn(no_ov_nets)}, with no frequency overlap")
+        for i, t in enumerate(items):
+            paras.append(f"{'abcdefghijklmnopqrstuvwxyz'[i]})\t{t}{';' if i < len(items) - 1 else '.'}")
 
     li = net_lon(ins_names[0], inp["ins_nets"][0][1], data) if ins_names else None
     arc = COORD_ARC.get(band)
